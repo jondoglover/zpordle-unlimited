@@ -229,6 +229,8 @@ function updateDarkMode() {
 	rerender();
 }
 
+localStorage.clear();
+
 // constants
 var MAX_NUM = 1000;
 var NUM_PRIMES = 10;
