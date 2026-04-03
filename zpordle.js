@@ -283,7 +283,7 @@ var nd = new Date(pstDate);
 var today = nd.getFullYear() + '/' + (nd.getMonth() + 1) + '/' + nd.getDate();
 
 // using https://github.com/davidbau/seedrandom
-Math.seedrandom(today);
+// Math.seedrandom(today);
 
 var target = Math.round(Math.random() * MAX_NUM);
 var todays_primes = []
