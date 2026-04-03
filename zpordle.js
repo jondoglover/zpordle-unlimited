@@ -51,24 +51,24 @@ function guess_helper(g) {
   }
   won = (val == 0);
 
-  // update statistics
-  if (localStorage.getItem("last-played-date") != today) {
-    // update guess statistics
-    var statistics = JSON.parse(localStorage.getItem("statistics"));
-    statistics[won ? guesses : 0]++;
-    localStorage.setItem("statistics", JSON.stringify(statistics));
-    // update streak statistics
-    var streaks = JSON.parse(localStorage.getItem("streaks"));
-    if (won) {
-      streaks["current-streak"]++;
-      streaks["max-streak"] = Math.max(streaks["current-streak"], streaks["max-streak"]);
-    } else {
-      streaks["current-streak"] = 0;
-    }
-    localStorage.setItem("streaks", JSON.stringify(streaks));
-    //
-    localStorage.setItem("last-played-date", today)
-  }
+  // // update statistics
+  // if (localStorage.getItem("last-played-date") != today) {
+  //   // update guess statistics
+  //   var statistics = JSON.parse(localStorage.getItem("statistics"));
+  //   statistics[won ? guesses : 0]++;
+  //   localStorage.setItem("statistics", JSON.stringify(statistics));
+  //   // update streak statistics
+  //   var streaks = JSON.parse(localStorage.getItem("streaks"));
+  //   if (won) {
+  //     streaks["current-streak"]++;
+  //     streaks["max-streak"] = Math.max(streaks["current-streak"], streaks["max-streak"]);
+  //   } else {
+  //     streaks["current-streak"] = 0;
+  //   }
+  //   localStorage.setItem("streaks", JSON.stringify(streaks));
+  //   //
+  //   localStorage.setItem("last-played-date", today)
+  // }
 
   // Game is over (either guess was correct, or we're out of guesses).
   var result_string = val == 0 ?
@@ -80,31 +80,11 @@ function guess_helper(g) {
 	displayStats(result_string, /* includeShare= */true);
 }
 
-function stats() {
-	displayStats("", false);
-}
-
 function displayStats(result_string, includeShare) {
-  result_string += "<canvas id=\"stats\" style=\"height: 300px; width: 100%;\"></canvas>";
-  result_string += "<div id=\"streak\" style=\"display: flex; color: black;\"></div>";
   if (includeShare) {
     result_string += "<br/>" + SHARE_BUTTON;
   }
   document.getElementById("result").innerHTML = result_string;
-
-  var statistics = JSON.parse( localStorage.getItem( "statistics" ) );
-  var streaks = JSON.parse( localStorage.getItem( "streaks" ) );
-  var games_played = statistics.reduce( ( a , b ) => a + b )
-  var wins = statistics.slice( 1 ).reduce( ( a , b ) => a + b )
-  var winpercent = ( games_played == 0 ) ? "N/A" : Math.floor( 100 * wins / games_played ) + "%" ;
-  var streak_string = "";
-  streak_string += "<div id=\"played\" style=\"flex: 1;\">Played<div style=\"font-size: 2em\">" + games_played + "</div></div>";
-  streak_string += "<div id=\"winpercent\" style=\"flex: 1\">Win Percentage<div style=\"font-size: 2em\">" + winpercent + "</div></div>";
-  streak_string += "<div id=\"curstreak\" style=\"flex: 1\">Current Streak<div style=\"font-size: 2em\">" + streaks[ "current-streak" ] + "</div></div>";
-  streak_string += "<div id=\"maxstreak\" style=\"flex: 1\">Max Streak<div style=\"font-size: 2em\">" + streaks[ "max-streak" ] + "</div></div>";
-  document.getElementById("streak").innerHTML = streak_string;
-
-	loadStats();
   $('#result').modal('show');
 }
 
